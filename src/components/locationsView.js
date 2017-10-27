@@ -3,6 +3,7 @@ import "semantic-ui-css/semantic.min.css";
 import React, { Component } from "react";
 import { Menu, Segment, Accordion, Input, Button } from "semantic-ui-react";
 import TopMenu from "./topMenu";
+import { locations } from "../model/locations";
 
 const styles = {
   items: {
@@ -26,39 +27,14 @@ export default class LocationsView extends Component {
 
   constructor() {
     super();
-    this.state = {
-      locations: [
-        {
-          category: "cat1",
-          name: "name1",
-          address: "address1",
-          lat: 2.1221,
-          long: 3.2121,
-        },
-        {
-          category: "cat2",
-          name: "name2",
-          address: "address2",
-          lat: 2.1221,
-          long: 3.2121,
-        },
-        {
-          category: "cat3",
-          name: "name3",
-          address: "address3",
-          lat: 2.1221,
-          long: 3.2121,
-        },
-      ],
-    };
   }
 
   component;
 
   render() {
     let { activeItem } = this.state;
-    if (!activeItem && this.state.locations.length) {
-      activeItem = this.state.locations[0].name;
+    if (!activeItem && locations.length) {
+      activeItem = locations[0].name;
     }
 
     return (
@@ -67,7 +43,7 @@ export default class LocationsView extends Component {
 
         <Segment attached>
           <Accordion styled style={styles.items}>
-            {this.state.locations.map(location => {
+            {locations.map(location => {
               return [
                 <Accordion.Title
                   style={{ ...(activeItem === location.name ? styles.itemSelected : null) }}
@@ -79,7 +55,7 @@ export default class LocationsView extends Component {
                     <tr>
                       <td style={styles.kind}>Category: </td>
                       <td style={styles.value}>
-                        {location.category}
+                        {location.category.name}
                       </td>
                     </tr>
                     <tr>

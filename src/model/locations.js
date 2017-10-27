@@ -17,4 +17,4 @@ export class Location {
   }
 }
 
-export const locations = [];
+export const locations = observable([]);

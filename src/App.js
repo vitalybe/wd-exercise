@@ -1,13 +1,18 @@
 import "semantic-ui-css/semantic.min.css";
 
 import React, { Component } from "react";
-import { Icon, Menu, } from "semantic-ui-react";
+import { Icon, Menu } from "semantic-ui-react";
 
 import LocationsView from "./components/locationsView";
 
-import { categories } from "./model/categories"
-import { locations } from "./model/locations"
+import { categories, Category } from "./model/categories";
+import { locations, Location } from "./model/locations";
 
+// TODO: Remove
+categories.push(new Category("cat1"), new Category("cat2"), new Category("cat3"));
+locations.push(new Location(categories[0], "loc1", "addr1", "1.1", "1.1"));
+locations.push(new Location(categories[0], "loc2", "addr2", "1.2", "1.2"));
+locations.push(new Location(categories[0], "loc3", "addr3", "1.3", "1.3"));
 
 const styles = {
   container: {
@@ -30,7 +35,6 @@ class App extends Component {
 
     return (
       <div style={styles.container}>
-
         <LocationsView />
 
         <Menu attached="bottom" tabular style={styles.menuBottom}>

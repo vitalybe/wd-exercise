@@ -9,4 +9,4 @@ export class Category {
   }
 }
 
-export const categories = [];
+export const categories = observable([]);
