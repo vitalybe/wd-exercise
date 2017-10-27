@@ -5,6 +5,7 @@ import { Segment, Accordion, Button } from "semantic-ui-react";
 import TopMenu from "./topMenu";
 import { locations } from "../model/locations";
 import LocationView from "./locationView";
+import LocationEdit from "./locationEdit";
 
 const styles = {
   items: {
@@ -47,7 +48,14 @@ export default class LocationsListView extends Component {
                   onClick={() => this.handleItemClick(location.name)}>
                   {location.name}
                 </Accordion.Title>,
-                <LocationView active={activeItem === location.name} location={location} />,
+                (() => {
+                  switch (this.state.activeMenu) {
+                    case "view":
+                      return <LocationView active={activeItem === location.name} location={location} />;
+                    case "edit":
+                      return <LocationEdit active={activeItem === location.name} location={location} />;
+                  }
+                })(),
               ];
             })}
           </Accordion>

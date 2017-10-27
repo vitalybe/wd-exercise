@@ -2,7 +2,7 @@ import "semantic-ui-css/semantic.min.css";
 
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Menu, Segment, Accordion, Input, Button } from "semantic-ui-react";
+import { Menu } from "semantic-ui-react";
 
 const styles = {
   items: {
