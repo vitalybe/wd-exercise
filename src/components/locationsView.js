@@ -12,12 +12,17 @@ const styles = {
   kind: {
     fontWeight: "bold",
   },
+  itemSelected: {
+    backgroundColor: "lightGrey",
+    color: "black"
+  },
+
 };
 
 export default class LocationsView extends Component {
-  state = { activeItem: "categories" };
+  state = { activeItem: "" };
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+  handleItemClick = name => this.setState({ activeItem: name });
 
   constructor() {
     super();
@@ -48,21 +53,28 @@ export default class LocationsView extends Component {
     };
   }
 
+  component;
+
   render() {
-    const { activeItem } = this.state;
+    let { activeItem } = this.state;
+    if (!activeItem && this.state.locations.length) {
+      activeItem = this.state.locations[0].name;
+    }
 
     return (
       <div>
-        <TopMenu/>
+        <TopMenu />
 
         <Segment attached>
           <Accordion styled style={styles.items}>
             {this.state.locations.map(location => {
               return [
-                <Accordion.Title active={true} index={0}>
+                <Accordion.Title
+                  style={{ ...(activeItem === location.name ? styles.itemSelected : null) }}
+                  onClick={() => this.handleItemClick(location.name)}>
                   {location.name}
                 </Accordion.Title>,
-                <Accordion.Content active={true}>
+                <Accordion.Content active={activeItem === location.name}>
                   <table>
                     <tr>
                       <td style={styles.kind}>Category: </td>
