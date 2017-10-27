@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import { Segment, Accordion, Button } from "semantic-ui-react";
 import TopMenu from "./topMenu";
 import { locations } from "../model/locations";
-import LocationsView from "./locationView";
+import LocationView from "./locationView";
 
 const styles = {
   items: {
@@ -47,7 +47,7 @@ export default class LocationsListView extends Component {
                   onClick={() => this.handleItemClick(location.name)}>
                   {location.name}
                 </Accordion.Title>,
-                <LocationsView active={activeItem === location.name} location={location} />,
+                <LocationView active={activeItem === location.name} location={location} />,
               ];
             })}
           </Accordion>

@@ -13,7 +13,7 @@ const styles = {
   value: {},
 };
 
-export default class LocationsView extends Component {
+export default class LocationView extends Component {
   render() {
     return (
       <Accordion.Content active={this.props.active}>
@@ -54,7 +54,7 @@ export default class LocationsView extends Component {
   }
 }
 
-LocationsView.propTypes = {
+LocationView.propTypes = {
   active: PropTypes.bool.required,
   location: PropTypes.instanceOf(Location).isRequired,
 };
