@@ -3,7 +3,7 @@ import "semantic-ui-css/semantic.min.css";
 import React, { Component } from "react";
 import { Icon, Menu } from "semantic-ui-react";
 
-import LocationsListView from "./components/LocationsListView";
+import LocationsListView from "./components/locationsListView";
 
 import { categories, Category } from "./model/categories";
 import { locations, Location } from "./model/locations";

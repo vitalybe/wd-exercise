@@ -1,23 +1,20 @@
 import "semantic-ui-css/semantic.min.css";
 
 import React, { Component } from "react";
-import { Menu, Segment, Accordion, Input, Button } from "semantic-ui-react";
+import { Segment, Accordion, Button } from "semantic-ui-react";
 import TopMenu from "./topMenu";
 import { locations } from "../model/locations";
+import LocationsView from "./locationView";
 
 const styles = {
   items: {
     flex: 1,
     width: "100%",
   },
-  kind: {
-    fontWeight: "bold",
-  },
   itemSelected: {
     backgroundColor: "lightGrey",
-    color: "black"
+    color: "black",
   },
-
 };
 
 export default class LocationsListView extends Component {
@@ -50,40 +47,7 @@ export default class LocationsListView extends Component {
                   onClick={() => this.handleItemClick(location.name)}>
                   {location.name}
                 </Accordion.Title>,
-                <Accordion.Content active={activeItem === location.name}>
-                  <table>
-                    <tr>
-                      <td style={styles.kind}>Category: </td>
-                      <td style={styles.value}>
-                        {location.category.name}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style={styles.kind}>Name: </td>
-                      <td style={styles.value}>
-                        {location.name}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style={styles.kind}>Address: </td>
-                      <td style={styles.value}>
-                        {location.address}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style={styles.kind}>Latitude: </td>
-                      <td style={styles.value}>
-                        {location.lat}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style={styles.kind}>Longitude: </td>
-                      <td style={styles.value}>
-                        {location.long}
-                      </td>
-                    </tr>
-                  </table>
-                </Accordion.Content>,
+                <LocationsView active={activeItem === location.name} location={location} />,
               ];
             })}
           </Accordion>
