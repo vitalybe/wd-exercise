@@ -2,6 +2,7 @@ import "semantic-ui-css/semantic.min.css";
 
 import React, { Component } from "react";
 import { Menu, Segment, Accordion, Input, Button } from "semantic-ui-react";
+import TopMenu from "./topMenu";
 
 const styles = {
   items: {
@@ -52,12 +53,7 @@ export default class LocationsView extends Component {
 
     return (
       <div>
-        <Menu attached="top">
-          <Menu.Item>View</Menu.Item>
-          <Menu.Item>Edit</Menu.Item>
-          <Menu.Item>Add</Menu.Item>
-          <Menu.Item>Delete</Menu.Item>
-        </Menu>
+        <TopMenu/>
 
         <Segment attached>
           <Accordion styled style={styles.items}>
@@ -93,7 +89,7 @@ export default class LocationsView extends Component {
                       </td>
                     </tr>
                     <tr>
-                      <td style={styles.kind}>Longtitude: </td>
+                      <td style={styles.kind}>Longitude: </td>
                       <td style={styles.value}>
                         {location.long}
                       </td>
