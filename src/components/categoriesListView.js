@@ -14,7 +14,7 @@ const styles = {
   }
 };
 
-export default class CategoriesView extends Component {
+export default class CategoriesListView extends Component {
   state = { activeItem: "categories" };
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });

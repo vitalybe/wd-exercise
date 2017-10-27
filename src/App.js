@@ -3,7 +3,7 @@ import "semantic-ui-css/semantic.min.css";
 import React, { Component } from "react";
 import { Icon, Menu } from "semantic-ui-react";
 
-import LocationsView from "./components/locationsView";
+import LocationsListView from "./components/LocationsListView";
 
 import { categories, Category } from "./model/categories";
 import { locations, Location } from "./model/locations";
@@ -35,7 +35,7 @@ class App extends Component {
 
     return (
       <div style={styles.container}>
-        <LocationsView />
+        <LocationsListView />
 
         <Menu attached="bottom" tabular style={styles.menuBottom}>
           <Menu.Item name="categories" active={activeItem === "categories"} onClick={this.handleItemClick}>

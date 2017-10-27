@@ -20,7 +20,7 @@ const styles = {
 
 };
 
-export default class LocationsView extends Component {
+export default class LocationsListView extends Component {
   state = { activeItem: "" };
 
   handleItemClick = name => this.setState({ activeItem: name });
