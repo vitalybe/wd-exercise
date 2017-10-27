@@ -2,7 +2,12 @@ import "semantic-ui-css/semantic.min.css";
 
 import React, { Component } from "react";
 import { Icon, Menu, } from "semantic-ui-react";
+
 import LocationsView from "./components/locationsView";
+
+import { categories } from "./model/categories"
+import { locations } from "./model/locations"
+
 
 const styles = {
   container: {
