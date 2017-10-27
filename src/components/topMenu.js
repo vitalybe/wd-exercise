@@ -20,16 +20,19 @@ const styles = {
 
 export default class TopMenu extends Component {
 
-  handleItemClick = (name, callback) => {
+  modifySelection(name) {
     this.setState({ activeItem: name });
-    if (callback) {
-      callback();
+    if (this.props.onSelectionChanged) {
+      this.props.onSelectionChanged(name);
     }
+  }
+
+  handleItemClick = name => {
+    this.modifySelection(name);
   };
 
-  constructor() {
-    super();
-    this.state = { activeItem: "view" };
+  componentWillMount() {
+    this.modifySelection("view");
   }
 
   render() {
@@ -39,22 +42,22 @@ export default class TopMenu extends Component {
       <Menu attached="top">
         <Menu.Item
           style={{ ...(activeItem === "view" ? styles.itemSelected : null) }}
-          onClick={() => this.handleItemClick("view", this.props.onView)}>
+          onClick={() => this.handleItemClick("view")}>
           View
         </Menu.Item>
         <Menu.Item
           style={{ ...(activeItem === "edit" ? styles.itemSelected : null) }}
-          onClick={() => this.handleItemClick("edit", this.props.onEdit)}>
+          onClick={() => this.handleItemClick("edit")}>
           Edit
         </Menu.Item>
         <Menu.Item
           style={{ ...(activeItem === "add" ? styles.itemSelected : null) }}
-          onClick={() => this.handleItemClick("add", this.props.onAdd)}>
+          onClick={() => this.handleItemClick("add")}>
           Add
         </Menu.Item>
         <Menu.Item
           style={{ ...(activeItem === "delete" ? styles.itemSelected : null) }}
-          onClick={() => this.handleItemClick("delete", this.props.onDelete)}>
+          onClick={() => this.handleItemClick("delete")}>
           Delete
         </Menu.Item>
       </Menu>
@@ -63,8 +66,5 @@ export default class TopMenu extends Component {
 }
 
 TopMenu.propTypes = {
-  onView: PropTypes.func,
-  onEdit: PropTypes.func,
-  onAdd: PropTypes.func,
-  onDelete: PropTypes.func,
+  onSelectionChanged: PropTypes.func.isRequired,
 };

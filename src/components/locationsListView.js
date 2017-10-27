@@ -22,11 +22,11 @@ export default class LocationsListView extends Component {
 
   handleItemClick = name => this.setState({ activeItem: name });
 
+  onTopMenuChanged = menuName => this.setState({ activeMenu: menuName });
+
   constructor() {
     super();
   }
-
-  component;
 
   render() {
     let { activeItem } = this.state;
@@ -36,7 +36,7 @@ export default class LocationsListView extends Component {
 
     return (
       <div>
-        <TopMenu />
+        <TopMenu onSelectionChanged={this.onTopMenuChanged} />
 
         <Segment attached>
           <Accordion styled style={styles.items}>
