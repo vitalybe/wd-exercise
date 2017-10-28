@@ -32,7 +32,7 @@ export default class TopMenu extends Component {
   };
 
   componentWillMount() {
-    this.modifySelection("view");
+    this.modifySelection("edit");
   }
 
   render() {
