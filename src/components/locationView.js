@@ -16,7 +16,7 @@ const styles = {
 export default class LocationView extends Component {
   render() {
     return (
-      <Accordion.Content active={this.props.active}>
+      <Accordion.Content active={true}>
         <table>
           <tr>
             <td style={styles.kind}>Category: </td>
@@ -55,6 +55,5 @@ export default class LocationView extends Component {
 }
 
 LocationView.propTypes = {
-  active: PropTypes.bool.required,
   location: PropTypes.instanceOf(Location).isRequired,
 };

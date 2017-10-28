@@ -6,6 +6,8 @@ import TopMenu from "./topMenu";
 import { locations } from "../model/locations";
 import LocationView from "./locationView";
 import LocationEdit from "./locationEdit";
+import LocationDelete from "./locationDelete";
+import { observer } from "mobx-react";
 
 const styles = {
   items: {
@@ -18,6 +20,7 @@ const styles = {
   },
 };
 
+@observer
 export default class LocationsListView extends Component {
   state = { activeItem: "" };
 
@@ -49,11 +52,17 @@ export default class LocationsListView extends Component {
                   {location.name}
                 </Accordion.Title>,
                 (() => {
-                  switch (this.state.activeMenu) {
-                    case "view":
-                      return <LocationView active={activeItem === location.name} location={location} />;
-                    case "edit":
-                      return <LocationEdit active={activeItem === location.name} location={location} />;
+                  if (activeItem === location.name) {
+                    switch (this.state.activeMenu) {
+                      case "view":
+                        return <LocationView location={location} />;
+
+                      case "edit":
+                        return <LocationEdit location={location} />;
+
+                      case "delete":
+                        return [<LocationView location={location} />, <LocationDelete location={location} />];
+                    }
                   }
                 })(),
               ];

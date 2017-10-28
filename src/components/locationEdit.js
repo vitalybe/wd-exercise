@@ -53,7 +53,7 @@ export default class LocationEdit extends Component {
 
   render() {
     return (
-      <Accordion.Content active={this.props.active}>
+      <Accordion.Content active={true}>
         <table>
           <tr>
             <td style={styles.kind}>Category: </td>
@@ -100,6 +100,5 @@ export default class LocationEdit extends Component {
 }
 
 LocationEdit.propTypes = {
-  active: PropTypes.bool.required,
   location: PropTypes.instanceOf(Location).isRequired,
 };
