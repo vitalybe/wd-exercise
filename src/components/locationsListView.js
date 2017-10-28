@@ -59,7 +59,6 @@ export default class LocationsListView extends Component {
               ];
             })}
           </Accordion>
-          <Button>Save</Button>
         </Segment>
       </div>
     );
