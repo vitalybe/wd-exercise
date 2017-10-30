@@ -14,15 +14,27 @@ export default class Map extends Component {
     this.state = { lat: this.props.initialLat, lng: this.props.initialLng };
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log(`setting lat/lng: ${nextProps.initialLat}/${nextProps.initialLng}`);
+    this.setState({ lat: nextProps.initialLat, lng: nextProps.initialLng });
+  }
+
   onGoogleApiLoaded = () => {
-    this.geocoder = new window.google.maps.Geocoder()
+    this.geocoder = new window.google.maps.Geocoder();
   };
 
   onClick = ({ lat, lng }) => {
     console.log(`changing lat -> ${lat} lng -> ${lng}`);
     this.setState({ lat, lng });
-    this.geocoder.geocode({ location: { lat, lng } }, (status, results) => {
-      console.log(status, results);
+
+    if (this.props.onLocationChanged) {
+      this.props.onLocationChanged(lat, lng);
+    }
+
+    // getting the address
+    this.geocoder.geocode({ location: { lat, lng } }, (results, status) => {
+      if (status === "OK" && results && results.length > 0)
+        this.props.onLocationChanged(lat, lng, results[0].formatted_address);
     });
   };
 
@@ -31,8 +43,8 @@ export default class Map extends Component {
       <div style={{ height: "10em", width: "10em" }}>
         <GoogleMapReact
           onGoogleApiLoaded={this.onGoogleApiLoaded}
-          onClick={this.onClick}
-          defaultCenter={{ lat: this.props.initialLat, lng: this.props.initialLng }}
+          onClick={!this.props.isReadOnly ? this.onClick : null}
+          center={{ lat: this.state.lat, lng: this.state.lng }}
           defaultZoom={11}
           options={{ fullscreenControl: false }}>
           <div
@@ -47,8 +59,9 @@ export default class Map extends Component {
 }
 
 Map.propTypes = {
-  onSelectionChanged: PropTypes.func.isRequired,
+  onLocationChanged: PropTypes.func,
 
   initialLat: PropTypes.number.isRequired,
   initialLng: PropTypes.number.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
 };

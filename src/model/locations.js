@@ -6,14 +6,14 @@ export class Location {
   @observable category = null;
   @observable address = null;
   @observable lat = null;
-  @observable long = null;
+  @observable lng = null;
 
-  constructor(category, name, address, lat, long) {
+  constructor(category, name, address, lat, lng) {
     this.name = name;
     this.category = category;
     this.address = address;
     this.lat = lat;
-    this.long = long;
+    this.lng = lng;
   }
 }
 

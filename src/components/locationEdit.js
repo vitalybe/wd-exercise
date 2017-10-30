@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { Accordion, Input, Dropdown, Button } from "semantic-ui-react";
 import { Location, locations } from "../model/locations";
 import { categories } from "../model/categories";
+import Map from "./map";
 
 const styles = {
   kind: {
@@ -26,7 +27,7 @@ export default class LocationEdit extends Component {
         name: this.props.location.name,
         address: this.props.location.address,
         lat: this.props.location.lat,
-        long: this.props.location.long,
+        lng: this.props.location.lng,
 
         modified: false,
       };
@@ -46,7 +47,7 @@ export default class LocationEdit extends Component {
     location.name = this.state.name;
     location.address = this.state.address;
     location.lat = this.state.lat;
-    location.long = this.state.long;
+    location.lng = this.state.lng;
   }
 
   onUpdate = () => {
@@ -63,6 +64,16 @@ export default class LocationEdit extends Component {
     this.setState({ modified: false });
   };
 
+  onMapLocationChanged = (lat, lng, address) => {
+    console.log(`map location changed: ${lat}/${lng}. Address: ${address}`)
+    let updatedState = { lat, lng, modified: true };
+    if (address) {
+      updatedState.address = address;
+    }
+
+    this.setState(updatedState)
+  };
+
   render() {
     return (
       <Accordion.Content active={true}>
@@ -73,7 +84,7 @@ export default class LocationEdit extends Component {
               <Dropdown
                 fluid
                 selection
-                placeholder='Select Category'
+                placeholder="Select Category"
                 value={this.state.categoryName || ""}
                 options={categories.map(category => ({ text: category.name, value: category.name }))}
                 onChange={(e, data) => this.modifyValue("categoryName", data.value)}
@@ -95,13 +106,13 @@ export default class LocationEdit extends Component {
           <tr>
             <td style={styles.kind}>Latitude: </td>
             <td style={styles.value}>
-              <Input value={this.state.lat} onChange={(e, data) => this.modifyValue("lat", data.value)} />
+              <Input value={this.state.lat} onChange={(e, data) => this.modifyValue("lat",  parseFloat(data.value))} />
             </td>
           </tr>
           <tr>
             <td style={styles.kind}>Longitude: </td>
             <td style={styles.value}>
-              <Input value={this.state.long} onChange={(e, data) => this.modifyValue("long", data.value)} />
+              <Input value={this.state.lng} onChange={(e, data) => this.modifyValue("lng", parseFloat(data.value))} />
             </td>
           </tr>
         </table>
@@ -112,6 +123,12 @@ export default class LocationEdit extends Component {
           : <Button onClick={this.onCreate} disabled={!this.state.modified}>
               Create
             </Button>}
+        <Map
+          isReadOnly={false}
+          initialLat={this.state.lat}
+          initialLng={this.state.lng}
+          onLocationChanged={this.onMapLocationChanged}
+        />
       </Accordion.Content>
     );
   }

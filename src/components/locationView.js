@@ -47,12 +47,12 @@ export default class LocationView extends Component {
             <tr>
               <td style={styles.kind}>Longitude: </td>
               <td style={styles.value}>
-                {this.props.location.long}
+                {this.props.location.lng}
               </td>
             </tr>
           </tbody>
         </table>
-        <Map initialLat={59.95} initialLng={30.33} onSelectionChanged={() => {}} />
+        <Map isReadOnly={true} initialLat={this.props.location.lat} initialLng={this.props.location.lng} />
       </Accordion.Content>
     );
   }

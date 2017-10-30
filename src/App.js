@@ -10,9 +10,9 @@ import { locations, Location } from "./model/locations";
 
 // TODO: Remove
 categories.push(new Category("cat1"), new Category("cat2"), new Category("cat3"));
-locations.push(new Location(categories[0], "loc1", "addr1", "1.1", "1.1"));
-locations.push(new Location(categories[0], "loc2", "addr2", "1.2", "1.2"));
-locations.push(new Location(categories[0], "loc3", "addr3", "1.3", "1.3"));
+locations.push(new Location(categories[0], "loc1", "addr1", 59.95, 30.33));
+locations.push(new Location(categories[0], "loc2", "addr2", 59.95, 30.33));
+locations.push(new Location(categories[0], "loc3", "addr3", 59.95, 30.33));
 
 const styles = {
   container: {
