@@ -3,6 +3,7 @@ import "semantic-ui-css/semantic.min.css";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Menu } from "semantic-ui-react";
+import {withRouter} from "react-router-dom";
 
 const styles = {
   items: {
@@ -18,46 +19,30 @@ const styles = {
   },
 };
 
-export default class TopMenu extends Component {
-
-  modifySelection(name) {
-    this.setState({ activeItem: name });
-    if (this.props.onSelectionChanged) {
-      this.props.onSelectionChanged(name);
-    }
-  }
-
-  handleItemClick = name => {
-    this.modifySelection(name);
-  };
-
-  componentWillMount() {
-    this.modifySelection("view");
-  }
-
+class TopMenu extends Component {
   render() {
-    const { activeItem } = this.state;
+    const matchUrl = this.props.match.url;
 
     return (
       <Menu attached="top">
         <Menu.Item
-          style={{ ...(activeItem === "view" ? styles.itemSelected : null) }}
-          onClick={() => this.handleItemClick("view")}>
+          style={{ ...(this.props.location.pathname === matchUrl + "/view" ? styles.itemSelected : null) }}
+          onClick={() => this.props.history.push(matchUrl + "/view")}>
           View
         </Menu.Item>
         <Menu.Item
-          style={{ ...(activeItem === "edit" ? styles.itemSelected : null) }}
-          onClick={() => this.handleItemClick("edit")}>
+          style={{ ...(this.props.location.pathname === matchUrl + "/edit" ? styles.itemSelected : null) }}
+          onClick={() => this.props.history.push(matchUrl + "/edit")}>
           Edit
         </Menu.Item>
         <Menu.Item
-          style={{ ...(activeItem === "add" ? styles.itemSelected : null) }}
-          onClick={() => this.handleItemClick("add")}>
+          style={{ ...(this.props.location.pathname === matchUrl + "/add" ? styles.itemSelected : null) }}
+          onClick={() => this.props.history.push(matchUrl + "/add")}>
           Add
         </Menu.Item>
         <Menu.Item
-          style={{ ...(activeItem === "delete" ? styles.itemSelected : null) }}
-          onClick={() => this.handleItemClick("delete")}>
+          style={{ ...(this.props.location.pathname === matchUrl + "/delete" ? styles.itemSelected : null) }}
+          onClick={() => this.props.history.push(matchUrl + "/delete")}>
           Delete
         </Menu.Item>
       </Menu>
@@ -66,5 +51,6 @@ export default class TopMenu extends Component {
 }
 
 TopMenu.propTypes = {
-  onSelectionChanged: PropTypes.func.isRequired,
 };
+
+export default withRouter(TopMenu)

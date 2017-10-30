@@ -1,13 +1,14 @@
 import "semantic-ui-css/semantic.min.css";
 
 import React, { Component } from "react";
-import { Segment, Accordion} from "semantic-ui-react";
+import { Segment, Accordion } from "semantic-ui-react";
 import TopMenu from "./topMenu";
 import { locations } from "../model/locations";
 import LocationView from "./locationView";
 import LocationEdit from "./locationEdit";
 import LocationDelete from "./locationDelete";
 import { observer } from "mobx-react";
+import { Redirect, Route } from "react-router-dom";
 
 const styles = {
   items: {
@@ -26,16 +27,18 @@ export default class LocationsListView extends Component {
 
   handleItemClick = name => this.setState({ activeItem: name });
 
-  onTopMenuChanged = menuName => this.setState({ activeMenu: menuName });
-
   render() {
     let { activeItem } = this.state;
     if (!activeItem && locations.length) {
       activeItem = locations[0].name;
     }
 
+    let pathname = this.props.location.pathname;
+
     return (
       <div>
+        <Route exact path={this.props.match.url} render={() => <Redirect to={this.props.match.url + "/view"} />} />
+
         <TopMenu onSelectionChanged={this.onTopMenuChanged} />
 
         <Segment attached>
@@ -45,21 +48,23 @@ export default class LocationsListView extends Component {
                 <div key={location.name}>
                   <Accordion.Title
                     style={{
-                      ...(activeItem === location.name && this.state.activeMenu !== "add" ? styles.itemSelected : null),
+                      ...(activeItem === location.name && pathname !== this.props.match.url + "/add"
+                        ? styles.itemSelected
+                        : null),
                     }}
                     onClick={() => this.handleItemClick(location.name)}>
                     {location.name}
                   </Accordion.Title>
                   {(() => {
                     if (activeItem === location.name) {
-                      switch (this.state.activeMenu) {
-                        case "view":
+                      switch (pathname) {
+                        case this.props.match.url + "/view":
                           return <LocationView location={location} />;
 
-                        case "edit":
+                        case this.props.match.url + "/edit":
                           return <LocationEdit location={location} />;
 
-                        case "delete":
+                        case this.props.match.url + "/delete":
                           return [<LocationView location={location} />, <LocationDelete location={location} />];
                       }
                     }
@@ -67,7 +72,7 @@ export default class LocationsListView extends Component {
                 </div>
               );
             })}
-            {this.state.activeMenu === "add"
+            {pathname === this.props.match.url + "/add"
               ? [<Accordion.Title style={{ ...styles.itemSelected }}>New location</Accordion.Title>, <LocationEdit />]
               : null}
           </Accordion>
