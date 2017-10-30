@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import { Accordion, Input, Dropdown, Button } from "semantic-ui-react";
-import { Location } from "../model/locations";
+import { Location, locations } from "../model/locations";
 import { categories } from "../model/categories";
 
 const styles = {
@@ -17,27 +17,28 @@ const styles = {
 export default class LocationEdit extends Component {
   constructor() {
     super();
+    this.state = {};
   }
 
   componentWillMount() {
-    this.setState({
-      categoryName: this.props.location.category.name,
-      name: this.props.location.name,
-      address: this.props.location.address,
-      lat: this.props.location.lat,
-      long: this.props.location.long,
+    if (this.props.location) {
+      this.setState({
+        categoryName: this.props.location.category.name,
+        name: this.props.location.name,
+        address: this.props.location.address,
+        lat: this.props.location.lat,
+        long: this.props.location.long,
 
-      modified: false,
-    });
+        modified: false,
+      });
+    }
   }
 
   modifyValue = (valueName, newValue) => {
     this.setState({ [valueName]: newValue, modified: true });
   };
 
-  onUpdate = () => {
-    let location = this.props.location;
-
+  fillLocationFromInput(location) {
     let newCategory = categories.find(category => category.name === this.state.categoryName);
     if (newCategory) {
       location.category = newCategory;
@@ -47,6 +48,18 @@ export default class LocationEdit extends Component {
     location.address = this.state.address;
     location.lat = this.state.lat;
     location.long = this.state.long;
+  }
+
+  onUpdate = () => {
+    this.fillLocationFromInput(this.props.location);
+
+    this.setState({ modified: false });
+  };
+
+  onCreate = () => {
+    let location = new Location();
+    this.fillLocationFromInput(location);
+    locations.push(location);
 
     this.setState({ modified: false });
   };
@@ -59,7 +72,10 @@ export default class LocationEdit extends Component {
             <td style={styles.kind}>Category: </td>
             <td style={styles.value}>
               <Dropdown
-                value={this.state.categoryName}
+                fluid
+                selection
+                placeholder='Select Category'
+                value={this.state.categoryName || ""}
                 options={categories.map(category => ({ text: category.name, value: category.name }))}
                 onChange={(e, data) => this.modifyValue("categoryName", data.value)}
               />
@@ -90,15 +106,18 @@ export default class LocationEdit extends Component {
             </td>
           </tr>
         </table>
-
-        <Button onClick={this.onUpdate} disabled={!this.state.modified}>
-          Update
-        </Button>
+        {this.props.location
+          ? <Button onClick={this.onUpdate} disabled={!this.state.modified}>
+              Update
+            </Button>
+          : <Button onClick={this.onCreate} disabled={!this.state.modified}>
+              Create
+            </Button>}
       </Accordion.Content>
     );
   }
 }
 
 LocationEdit.propTypes = {
-  location: PropTypes.instanceOf(Location).isRequired,
+  location: PropTypes.instanceOf(Location),
 };

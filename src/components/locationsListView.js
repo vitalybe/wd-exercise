@@ -47,7 +47,9 @@ export default class LocationsListView extends Component {
             {locations.map(location => {
               return [
                 <Accordion.Title
-                  style={{ ...(activeItem === location.name ? styles.itemSelected : null) }}
+                  style={{
+                    ...(activeItem === location.name && this.state.activeMenu !== "add" ? styles.itemSelected : null),
+                  }}
                   onClick={() => this.handleItemClick(location.name)}>
                   {location.name}
                 </Accordion.Title>,
@@ -67,6 +69,9 @@ export default class LocationsListView extends Component {
                 })(),
               ];
             })}
+            {this.state.activeMenu === "add"
+              ? [<Accordion.Title style={{ ...styles.itemSelected }}>New location</Accordion.Title>, <LocationEdit />]
+              : null}
           </Accordion>
         </Segment>
       </div>
