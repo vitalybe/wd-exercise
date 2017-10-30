@@ -15,14 +15,13 @@ const styles = {
 };
 
 export default class LocationEdit extends Component {
-  constructor() {
-    super();
-    this.state = {};
-  }
+  constructor(props) {
+    super(props);
 
-  componentWillMount() {
+    this.state = {};
+
     if (this.props.location) {
-      this.setState({
+      this.state = {
         categoryName: this.props.location.category.name,
         name: this.props.location.name,
         address: this.props.location.address,
@@ -30,7 +29,7 @@ export default class LocationEdit extends Component {
         long: this.props.location.long,
 
         modified: false,
-      });
+      };
     }
   }
 

@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 
 import { Accordion } from "semantic-ui-react";
 import { Location } from "../model/locations";
+import Map from "./map";
 
 const styles = {
   kind: {
@@ -49,6 +50,7 @@ export default class LocationView extends Component {
             </td>
           </tr>
         </table>
+        <Map initialLat={ 59.95} initialLng={30.33} />
       </Accordion.Content>
     );
   }
