@@ -1,7 +1,7 @@
 import "semantic-ui-css/semantic.min.css";
 
 import React, { Component } from "react";
-import { Segment, Accordion, Button } from "semantic-ui-react";
+import { Segment, Accordion} from "semantic-ui-react";
 import TopMenu from "./topMenu";
 import { locations } from "../model/locations";
 import LocationView from "./locationView";
@@ -28,10 +28,6 @@ export default class LocationsListView extends Component {
 
   onTopMenuChanged = menuName => this.setState({ activeMenu: menuName });
 
-  constructor() {
-    super();
-  }
-
   render() {
     let { activeItem } = this.state;
     if (!activeItem && locations.length) {
@@ -45,29 +41,31 @@ export default class LocationsListView extends Component {
         <Segment attached>
           <Accordion styled style={styles.items}>
             {locations.map(location => {
-              return [
-                <Accordion.Title
-                  style={{
-                    ...(activeItem === location.name && this.state.activeMenu !== "add" ? styles.itemSelected : null),
-                  }}
-                  onClick={() => this.handleItemClick(location.name)}>
-                  {location.name}
-                </Accordion.Title>,
-                (() => {
-                  if (activeItem === location.name) {
-                    switch (this.state.activeMenu) {
-                      case "view":
-                        return <LocationView location={location} />;
+              return (
+                <div key={location.name}>
+                  <Accordion.Title
+                    style={{
+                      ...(activeItem === location.name && this.state.activeMenu !== "add" ? styles.itemSelected : null),
+                    }}
+                    onClick={() => this.handleItemClick(location.name)}>
+                    {location.name}
+                  </Accordion.Title>
+                  {(() => {
+                    if (activeItem === location.name) {
+                      switch (this.state.activeMenu) {
+                        case "view":
+                          return <LocationView location={location} />;
 
-                      case "edit":
-                        return <LocationEdit location={location} />;
+                        case "edit":
+                          return <LocationEdit location={location} />;
 
-                      case "delete":
-                        return [<LocationView location={location} />, <LocationDelete location={location} />];
+                        case "delete":
+                          return [<LocationView location={location} />, <LocationDelete location={location} />];
+                      }
                     }
-                  }
-                })(),
-              ];
+                  })()}
+                </div>
+              );
             })}
             {this.state.activeMenu === "add"
               ? [<Accordion.Title style={{ ...styles.itemSelected }}>New location</Accordion.Title>, <LocationEdit />]
