@@ -4,10 +4,24 @@ import React, { Component } from "react";
 import { Checkbox, Dropdown, Header, Label, Segment } from "semantic-ui-react";
 import { observer } from "mobx-react";
 
+import { Accordion } from "semantic-ui-react";
 import TopMenu from "./topMenu";
 import LocationsListView from "./locationsListView";
 import { categories } from "../model/categories";
 import { locations } from "../model/locations";
+import LocationEdit from "./locationEdit";
+
+const styles = {
+  items: {
+    flex: 1,
+    width: "100%",
+  },
+  itemSelected: {
+    backgroundColor: "lightGrey",
+    color: "black",
+  },
+};
+
 
 @observer
 export default class LocationsGroupsListView extends Component {
@@ -23,6 +37,8 @@ export default class LocationsGroupsListView extends Component {
   };
 
   render() {
+
+    let pathname = this.props.location.pathname;
     let sortedLocations = locations.sort(location => location.name);
 
     return (
@@ -48,6 +64,15 @@ export default class LocationsGroupsListView extends Component {
             onChange={(e, data) => this.setState({ toGroupByCategory: data.checked })}
           />
 
+          {pathname === this.props.match.url + "/add"
+            ? <div>
+              <Accordion styled style={styles.items}>
+                <Accordion.Title style={{ ...styles.itemSelected }}>New location</Accordion.Title>
+                <LocationEdit />
+              </Accordion>
+            </div>
+            : null}
+
           {this.state.toGroupByCategory || this.state.toFilterByCategory
             ? categories
                 .filter(
@@ -55,7 +80,7 @@ export default class LocationsGroupsListView extends Component {
                 )
                 .map(category => {
                   return (
-                    <div>
+                    <div key={category.name}>
                       <Header>
                         Category {category.name}
                       </Header>

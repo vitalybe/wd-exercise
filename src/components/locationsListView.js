@@ -3,7 +3,7 @@ import "semantic-ui-css/semantic.min.css";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import { Segment, Accordion } from "semantic-ui-react";
+import { Accordion } from "semantic-ui-react";
 import LocationView from "./locationView";
 import LocationEdit from "./locationEdit";
 import LocationDelete from "./locationDelete";
@@ -66,12 +66,6 @@ class LocationsListView extends Component {
               </div>
             );
           })}
-          {pathname === this.props.match.url + "/add"
-            ? <div>
-                <Accordion.Title style={{ ...styles.itemSelected }}>New location</Accordion.Title>
-                <LocationEdit />
-              </div>
-            : null}
         </Accordion>
       </div>
     );
