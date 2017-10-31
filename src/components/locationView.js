@@ -59,5 +59,5 @@ export default class LocationView extends Component {
 }
 
 LocationView.propTypes = {
-  location: PropTypes.instanceOf(Location).isRequired,
+  location: PropTypes.object.isRequired,
 };

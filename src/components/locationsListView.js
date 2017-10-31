@@ -1,14 +1,14 @@
 import "semantic-ui-css/semantic.min.css";
 
 import React, { Component } from "react";
+import {PropTypes} from 'mobx-react'
+
 import { Segment, Accordion } from "semantic-ui-react";
-import TopMenu from "./topMenu";
-import { locations } from "../model/locations";
 import LocationView from "./locationView";
 import LocationEdit from "./locationEdit";
 import LocationDelete from "./locationDelete";
 import { observer } from "mobx-react";
-import { Redirect, Route } from "react-router-dom";
+import {Redirect, Route, withRouter} from "react-router-dom";
 
 const styles = {
   items: {
@@ -22,15 +22,15 @@ const styles = {
 };
 
 @observer
-export default class LocationsListView extends Component {
+class LocationsListView extends Component {
   state = { activeItem: "" };
 
   handleItemClick = name => this.setState({ activeItem: name });
 
   render() {
     let { activeItem } = this.state;
-    if (!activeItem && locations.length) {
-      activeItem = locations[0].name;
+    if (!activeItem && this.props.locations.length) {
+      activeItem = this.props.locations[0].name;
     }
 
     let pathname = this.props.location.pathname;
@@ -39,11 +39,8 @@ export default class LocationsListView extends Component {
       <div>
         <Route exact path={this.props.match.url} render={() => <Redirect to={this.props.match.url + "/view"} />} />
 
-        <TopMenu onSelectionChanged={this.onTopMenuChanged} />
-
-        <Segment attached>
           <Accordion styled style={styles.items}>
-            {locations.map(location => {
+            {this.props.locations.map(location => {
               return (
                 <div key={location.name}>
                   <Accordion.Title
@@ -82,8 +79,14 @@ export default class LocationsListView extends Component {
                 </div>
               : null}
           </Accordion>
-        </Segment>
       </div>
     );
   }
 }
+
+
+LocationsListView.propTypes = {
+  locations: PropTypes.observableArray.isRequired
+};
+
+export default withRouter(LocationsListView)

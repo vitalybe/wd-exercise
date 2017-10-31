@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Route, withRouter, Redirect, matchPath } from "react-router-dom";
 
 import { Icon, Menu } from "semantic-ui-react";
-import LocationsListView from "./locationsListView";
+import LocationsGroupsListView from "./locationsGroupsListView";
 
 import { categories, Category } from "../model/categories";
 import { locations, Location } from "../model/locations";
@@ -31,7 +31,7 @@ class MainContainer extends Component {
       <div style={styles.container}>
 
         <Route exact path="/" render={() => <Redirect to="/locations" />} />
-        <Route path="/locations" component={LocationsListView}/>
+        <Route path="/locations" component={LocationsGroupsListView}/>
 
         <Menu attached="bottom" tabular style={styles.menuBottom}>
           <Menu.Item

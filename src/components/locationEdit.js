@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import { Accordion, Input, Dropdown, Button } from "semantic-ui-react";
-import { Location, locations } from "../model/locations";
+import { locations } from "../model/locations";
 import { categories } from "../model/categories";
 import Map from "./map/map";
 
@@ -144,5 +144,5 @@ export default class LocationEdit extends Component {
 }
 
 LocationEdit.propTypes = {
-  location: PropTypes.instanceOf(Location),
+  location: PropTypes.object,
 };
