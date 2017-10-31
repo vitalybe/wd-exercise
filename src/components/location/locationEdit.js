@@ -81,6 +81,36 @@ export default class LocationEdit extends Component {
     this.setState(updatedState);
   };
 
+  isNameInputValid() {
+    return this.state.name && !locations.find(location => location.name === this.state.name);
+  }
+
+  isCategoryDropboxValid() {
+    return this.state.categoryName;
+  }
+
+  isAddressInputValid() {
+    return this.state.address;
+  }
+
+  isLatInputValid() {
+    return this.state.lat;
+  }
+
+  isLngInputValid() {
+    return this.state.lng;
+  }
+
+  isAllValid() {
+    return (
+      this.isNameInputValid() &&
+      this.isAddressInputValid() &&
+      this.isLatInputValid() &&
+      this.isLngInputValid() &&
+      this.isCategoryDropboxValid()
+    );
+  }
+
   render() {
     return (
       <Accordion.Content active={true}>
@@ -90,7 +120,11 @@ export default class LocationEdit extends Component {
               <tr>
                 <td style={styles.kind}>Name: </td>
                 <td style={styles.value}>
-                  <Input value={this.state.name} onChange={(e, data) => this.modifyValue("name", data.value)} />
+                  <Input
+                    value={this.state.name}
+                    onChange={(e, data) => this.modifyValue("name", data.value)}
+                    error={!this.isNameInputValid()}
+                  />
                 </td>
               </tr>
               <tr>
@@ -103,21 +137,28 @@ export default class LocationEdit extends Component {
                     value={this.state.categoryName || ""}
                     options={categories.map(category => ({ text: category.name, value: category.name }))}
                     onChange={(e, data) => this.modifyValue("categoryName", data.value)}
+                    error={!this.isCategoryDropboxValid()}
                   />
                 </td>
               </tr>
               <tr>
                 <td style={styles.kind}>Address: </td>
                 <td style={styles.value}>
-                  <Input value={this.state.address} onChange={(e, data) => this.modifyValue("address", data.value)} />
+                  <Input
+                    value={this.state.address}
+                    onChange={(e, data) => this.modifyValue("address", data.value)}
+                    error={!this.isAddressInputValid()}
+                  />
                 </td>
               </tr>
               <tr>
                 <td style={styles.kind}>Latitude: </td>
                 <td style={styles.value}>
                   <Input
+                    type="number"
                     value={this.state.lat}
                     onChange={(e, data) => this.modifyValue("lat", parseFloat(data.value))}
+                    error={!this.isLatInputValid()}
                   />
                 </td>
               </tr>
@@ -125,8 +166,10 @@ export default class LocationEdit extends Component {
                 <td style={styles.kind}>Longitude: </td>
                 <td style={styles.value}>
                   <Input
+                    type="number"
                     value={this.state.lng}
                     onChange={(e, data) => this.modifyValue("lng", parseFloat(data.value))}
+                    error={!this.isLngInputValid()}
                   />
                 </td>
               </tr>
@@ -139,12 +182,12 @@ export default class LocationEdit extends Component {
             onLocationChanged={this.onMapLocationChanged}
           />
           {this.props.location
-            ? <Button onClick={this.onUpdate} disabled={!this.state.modified}>
-              Update
-            </Button>
-            : <Button onClick={this.onCreate} disabled={!this.state.modified}>
-              Create
-            </Button>}
+            ? <Button onClick={this.onUpdate} disabled={!this.state.modified || !this.isAllValid()}>
+                Update
+              </Button>
+            : <Button onClick={this.onCreate} disabled={!this.state.modified || !this.isAllValid()}>
+                Create
+              </Button>}
         </div>
       </Accordion.Content>
     );
