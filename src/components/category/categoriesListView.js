@@ -1,95 +1,93 @@
 import "semantic-ui-css/semantic.min.css";
 
 import React, { Component } from "react";
-import { Menu, Segment, Accordion, Input, Button } from "semantic-ui-react";
-import { categories } from "../../model/categories"
+import PropTypes from "prop-types";
+
+import { Accordion } from "semantic-ui-react";
+import { categories } from "../../model/categories";
+import TopMenu from "../topMenu"
+import CategoryView from "./categoryView";
+import CategoryEdit from "./categoryEdit";
+import CategoryDelete from "./categoryDelete";
+import { observer } from "mobx-react";
+import { Redirect, Route, withRouter } from "react-router-dom";
 
 const styles = {
   items: {
     flex: 1,
     width: "100%",
   },
-  kind: {
-    fontWeight: "bold",
-  }
+  itemSelected: {
+    backgroundColor: "lightGrey",
+    color: "black",
+  },
 };
 
-export default class CategoriesListView extends Component {
-  state = { activeItem: "categories" };
+@observer
+class CategoriesListView extends Component {
+  state = { selectedCategoryName: categories[0].name };
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
-
-  constructor() {
-    super();
-    this.setState({})
-  }
+  handleItemClick = name => {
+    this.setState({ selectedCategoryName: name });
+  };
 
   render() {
-    const { activeItem } = this.state;
+    let pathname = this.props.location.pathname;
+    let selectedCategoryName = this.state.selectedCategoryName;
 
     return (
       <div>
-        <Menu attached="top">
-          <Menu.Item>View</Menu.Item>
-          <Menu.Item>Edit</Menu.Item>
-          <Menu.Item>Add</Menu.Item>
-          <Menu.Item>Delete</Menu.Item>
-        </Menu>
+        <Route exact path={this.props.match.url} render={() => <Redirect to={this.props.match.url + "/view"} />} />
 
-        <Segment attached>
-          <Accordion styled style={styles.items}>
-            <Accordion.Title active={true} index={0}>
-              Category C
-            </Accordion.Title>
-            <Accordion.Content active={true}>
-              <table>
-                <tr>
-                  <td style={styles.kind}>Category: </td>
-                  <td style={styles.value}>Aaa</td>
-                </tr>
-                <tr>
-                  <td style={styles.kind}>Name: </td>
-                  <td style={styles.value}>Category C</td>
-                </tr>
-              </table>
-            </Accordion.Content>
-            <Accordion styled style={styles.items}>
-              <Accordion.Title active={false} index={0}>
-                Collapsed
-              </Accordion.Title>
-              <Accordion.Content active={false}>
-                <table>
-                  <tr>
-                    <td style={styles.kind}>Category: </td>
-                    <td style={styles.value}>Aaa</td>
-                  </tr>
-                  <tr>
-                    <td style={styles.kind}>Name: </td>
-                    <td style={styles.value}>Category C</td>
-                  </tr>
-                </table>
-              </Accordion.Content>
-              <Accordion.Title active={true} index={0}>
-                Category edit
-              </Accordion.Title>
-              <Accordion.Content active={true}>
-                <table>
-                  <tr>
-                    <td style={styles.kind}>Category: </td>
-                    <td style={styles.value}><Input/></td>
-                  </tr>
-                  <tr>
-                    <td style={styles.kind}>Name: </td>
-                    <td style={styles.value}><Input/></td>
-                  </tr>
-                </table>
-                <Button>Save</Button>
-              </Accordion.Content>
-            </Accordion>
+        <TopMenu />
 
-          </Accordion>
-        </Segment>
+        <Accordion styled style={styles.items}>
+          {categories.map(category => {
+            return (
+              <div key={category.name}>
+                <Accordion.Title
+                  style={{
+                    ...(selectedCategoryName === category.name && pathname !== this.props.match.url + "/add"
+                      ? styles.itemSelected
+                      : null),
+                  }}
+                  onClick={() => this.handleItemClick(category.name)}>
+                  {category.name}
+                </Accordion.Title>
+                {(() => {
+                  if (selectedCategoryName === category.name) {
+                    switch (pathname) {
+                      case this.props.match.url + "/view":
+                        return <CategoryView category={category} />;
+
+                      case this.props.match.url + "/edit":
+                        return <CategoryEdit category={category} />;
+
+                      case this.props.match.url + "/delete":
+                        return [<CategoryView category={category} />, <CategoryDelete category={category} />];
+
+                      default:
+                        return null;
+                    }
+                  }
+                })()}
+              </div>
+            );
+          })}
+
+          {pathname === this.props.match.url + "/add"
+            ? <div>
+              <Accordion styled style={styles.items}>
+                <Accordion.Title style={{ ...styles.itemSelected }}>New category</Accordion.Title>
+                <CategoryEdit />
+              </Accordion>
+            </div>
+            : null}
+
+        </Accordion>
       </div>
     );
   }
 }
+
+export default withRouter(CategoriesListView);

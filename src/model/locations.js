@@ -1,5 +1,5 @@
-import { observable } from "mobx";
-import { autorun } from "mobx";
+import { observable, autorun } from "mobx";
+import { categories } from "./categories";
 
 export class Location {
   @observable name = null;
@@ -20,17 +20,17 @@ export class Location {
 const STORAGE_KEY = "welldone_locations";
 let locationsObservable = null;
 
-let locationsString = localStorage.getItem(STORAGE_KEY);
-if (locationsString) {
-  locationsObservable = observable(JSON.parse(locationsString));
-} else {
-  locationsObservable = observable([]);
-}
+let locationsString = localStorage.getItem(STORAGE_KEY) || "[]";
+locationsObservable = observable(
+  JSON.parse(locationsString).map(location => {
+    location.category = categories.find(category => category.name === location.category.name);
+    return location
+  })
+);
 
 // Persist to local storage
 autorun(() => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(locationsObservable))
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(locationsObservable));
 });
-
 
 export const locations = locationsObservable;

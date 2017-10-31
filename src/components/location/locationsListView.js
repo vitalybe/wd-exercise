@@ -30,7 +30,7 @@ class LocationsListView extends Component {
 
   render() {
     let pathname = this.props.location.pathname;
-    let selectLocationName = this.props.selectedLocationName;
+    let selectedLocationName = this.props.selectedLocationName;
 
     return (
       <div>
@@ -42,7 +42,7 @@ class LocationsListView extends Component {
               <div key={location.name}>
                 <Accordion.Title
                   style={{
-                    ...(selectLocationName === location.name && pathname !== this.props.match.url + "/add"
+                    ...(selectedLocationName === location.name && pathname !== this.props.match.url + "/add"
                       ? styles.itemSelected
                       : null),
                   }}
@@ -50,7 +50,7 @@ class LocationsListView extends Component {
                   {location.name}
                 </Accordion.Title>
                 {(() => {
-                  if (selectLocationName === location.name) {
+                  if (selectedLocationName === location.name) {
                     switch (pathname) {
                       case this.props.match.url + "/view":
                         return <LocationView location={location} />;

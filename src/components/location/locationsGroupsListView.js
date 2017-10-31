@@ -64,15 +64,6 @@ export default class LocationsGroupsListView extends Component {
             onChange={(e, data) => this.setState({ toGroupByCategory: data.checked })}
           />
 
-          {pathname === this.props.match.url + "/add"
-            ? <div>
-              <Accordion styled style={styles.items}>
-                <Accordion.Title style={{ ...styles.itemSelected }}>New location</Accordion.Title>
-                <LocationEdit />
-              </Accordion>
-            </div>
-            : null}
-
           {this.state.toGroupByCategory || this.state.toFilterByCategory
             ? categories
                 .filter(
@@ -97,6 +88,16 @@ export default class LocationsGroupsListView extends Component {
                 selectedLocationName={this.state.selectedLocationName}
                 onSelectedLocationChange={this.onSelectedLocationChange}
               />}
+
+          {pathname === this.props.match.url + "/add"
+            ? <div>
+              <Accordion styled style={styles.items}>
+                <Accordion.Title style={{ ...styles.itemSelected }}>New location</Accordion.Title>
+                <LocationEdit />
+              </Accordion>
+            </div>
+            : null}
+
         </Segment>
       </div>
     );
