@@ -68,7 +68,7 @@ export default class LocationsListView extends Component {
                           return [<LocationView location={location} />, <LocationDelete location={location} />];
 
                         default:
-                          throw new Error("unexpected")
+                          return null;
                       }
                     }
                   })()}
@@ -76,7 +76,10 @@ export default class LocationsListView extends Component {
               );
             })}
             {pathname === this.props.match.url + "/add"
-              ? [<Accordion.Title style={{ ...styles.itemSelected }}>New location</Accordion.Title>, <LocationEdit />]
+              ? <div>
+                  <Accordion.Title style={{ ...styles.itemSelected }}>New location</Accordion.Title>
+                  <LocationEdit />
+                </div>
               : null}
           </Accordion>
         </Segment>

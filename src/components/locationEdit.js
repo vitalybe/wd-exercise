@@ -19,8 +19,6 @@ export default class LocationEdit extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
-
     if (this.props.location) {
       this.state = {
         categoryName: this.props.location.category.name,
@@ -28,6 +26,15 @@ export default class LocationEdit extends Component {
         address: this.props.location.address,
         lat: this.props.location.lat,
         lng: this.props.location.lng,
+
+        modified: false,
+      };
+    } else {
+      this.state = {
+        name: "",
+        address: "",
+        lat: 32.02,
+        lng: 34.85,
 
         modified: false,
       };
