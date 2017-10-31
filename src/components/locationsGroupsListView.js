@@ -11,7 +11,16 @@ import { locations } from "../model/locations";
 
 @observer
 export default class LocationsGroupsListView extends Component {
-  state = { toGroupByCategory: false, toFilterByCategory: false, showOnlyCategory: categories[0].name };
+  state = {
+    toGroupByCategory: false,
+    toFilterByCategory: false,
+    showOnlyCategory: categories[0].name,
+    selectedLocationName: "",
+  };
+
+  onSelectedLocationChange = name => {
+    this.setState({ selectedLocationName: name });
+  };
 
   render() {
     let sortedLocations = locations.sort(location => location.name);
@@ -52,11 +61,17 @@ export default class LocationsGroupsListView extends Component {
                       </Header>
                       <LocationsListView
                         locations={sortedLocations.filter(location => location.category.name === category.name)}
+                        selectedLocationName={this.state.selectedLocationName}
+                        onSelectedLocationChange={this.onSelectedLocationChange}
                       />
                     </div>
                   );
                 })
-            : <LocationsListView locations={sortedLocations} />}
+            : <LocationsListView
+                locations={sortedLocations}
+                selectedLocationName={this.state.selectedLocationName}
+                onSelectedLocationChange={this.onSelectedLocationChange}
+              />}
         </Segment>
       </div>
     );
