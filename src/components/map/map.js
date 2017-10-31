@@ -4,8 +4,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import GoogleMapReact from "google-map-react";
-
-const styles = {};
+import Marker from "./marker";
 
 export default class Map extends Component {
   constructor(props) {
@@ -44,15 +43,12 @@ export default class Map extends Component {
         <GoogleMapReact
           bootstrapURLKeys={{ key: "AIzaSyCrMf3KYulRhiTyhbJuCu3QPTdwhLUBskA" }}
           onGoogleApiLoaded={this.onGoogleApiLoaded}
+          yesIWantToUseGoogleMapApiInternals
           onClick={!this.props.isReadOnly ? this.onClick : null}
           center={{ lat: this.state.lat, lng: this.state.lng }}
           defaultZoom={11}
           options={{ fullscreenControl: false }}>
-          <div
-            lat={this.state.lat}
-            lng={this.state.lng}
-            style={{ height: "1em", width: "1em", backgroundColor: "red" }}
-          />
+          <Marker lat={this.state.lat} lng={this.state.lng} />
         </GoogleMapReact>
       </div>
     );

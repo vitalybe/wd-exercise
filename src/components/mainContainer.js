@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Link, Switch, withRouter, Redirect } from "react-router-dom";
+import { Route, withRouter, Redirect } from "react-router-dom";
 
 import { Icon, Menu } from "semantic-ui-react";
 import LocationsListView from "./locationsListView";

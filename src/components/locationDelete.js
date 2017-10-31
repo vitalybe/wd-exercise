@@ -6,13 +6,6 @@ import PropTypes from "prop-types";
 import { Button } from "semantic-ui-react";
 import { locations } from "../model/locations";
 
-const styles = {
-  kind: {
-    fontWeight: "bold",
-  },
-  value: {},
-};
-
 export default class LocationDelete extends Component {
   onDelete = () => {
     let foundIndex = locations.findIndex(location => location.name === this.props.location.name);

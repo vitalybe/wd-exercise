@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { Accordion, Input, Dropdown, Button } from "semantic-ui-react";
 import { Location, locations } from "../model/locations";
 import { categories } from "../model/categories";
-import Map from "./map";
+import Map from "./map/map";
 
 const styles = {
   kind: {
@@ -65,56 +65,58 @@ export default class LocationEdit extends Component {
   };
 
   onMapLocationChanged = (lat, lng, address) => {
-    console.log(`map location changed: ${lat}/${lng}. Address: ${address}`)
+    console.log(`map location changed: ${lat}/${lng}. Address: ${address}`);
     let updatedState = { lat, lng, modified: true };
     if (address) {
       updatedState.address = address;
     }
 
-    this.setState(updatedState)
+    this.setState(updatedState);
   };
 
   render() {
     return (
       <Accordion.Content active={true}>
         <table>
-          <tr>
-            <td style={styles.kind}>Category: </td>
-            <td style={styles.value}>
-              <Dropdown
-                fluid
-                selection
-                placeholder="Select Category"
-                value={this.state.categoryName || ""}
-                options={categories.map(category => ({ text: category.name, value: category.name }))}
-                onChange={(e, data) => this.modifyValue("categoryName", data.value)}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td style={styles.kind}>Name: </td>
-            <td style={styles.value}>
-              <Input value={this.state.name} onChange={(e, data) => this.modifyValue("name", data.value)} />
-            </td>
-          </tr>
-          <tr>
-            <td style={styles.kind}>Address: </td>
-            <td style={styles.value}>
-              <Input value={this.state.address} onChange={(e, data) => this.modifyValue("address", data.value)} />
-            </td>
-          </tr>
-          <tr>
-            <td style={styles.kind}>Latitude: </td>
-            <td style={styles.value}>
-              <Input value={this.state.lat} onChange={(e, data) => this.modifyValue("lat",  parseFloat(data.value))} />
-            </td>
-          </tr>
-          <tr>
-            <td style={styles.kind}>Longitude: </td>
-            <td style={styles.value}>
-              <Input value={this.state.lng} onChange={(e, data) => this.modifyValue("lng", parseFloat(data.value))} />
-            </td>
-          </tr>
+          <tbody>
+            <tr>
+              <td style={styles.kind}>Category: </td>
+              <td style={styles.value}>
+                <Dropdown
+                  fluid
+                  selection
+                  placeholder="Select Category"
+                  value={this.state.categoryName || ""}
+                  options={categories.map(category => ({ text: category.name, value: category.name }))}
+                  onChange={(e, data) => this.modifyValue("categoryName", data.value)}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td style={styles.kind}>Name: </td>
+              <td style={styles.value}>
+                <Input value={this.state.name} onChange={(e, data) => this.modifyValue("name", data.value)} />
+              </td>
+            </tr>
+            <tr>
+              <td style={styles.kind}>Address: </td>
+              <td style={styles.value}>
+                <Input value={this.state.address} onChange={(e, data) => this.modifyValue("address", data.value)} />
+              </td>
+            </tr>
+            <tr>
+              <td style={styles.kind}>Latitude: </td>
+              <td style={styles.value}>
+                <Input value={this.state.lat} onChange={(e, data) => this.modifyValue("lat", parseFloat(data.value))} />
+              </td>
+            </tr>
+            <tr>
+              <td style={styles.kind}>Longitude: </td>
+              <td style={styles.value}>
+                <Input value={this.state.lng} onChange={(e, data) => this.modifyValue("lng", parseFloat(data.value))} />
+              </td>
+            </tr>
+          </tbody>
         </table>
         {this.props.location
           ? <Button onClick={this.onUpdate} disabled={!this.state.modified}>

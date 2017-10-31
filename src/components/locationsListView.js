@@ -66,6 +66,9 @@ export default class LocationsListView extends Component {
 
                         case this.props.match.url + "/delete":
                           return [<LocationView location={location} />, <LocationDelete location={location} />];
+
+                        default:
+                          throw new Error("unexpected")
                       }
                     }
                   })()}
