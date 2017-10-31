@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, withRouter, Redirect } from "react-router-dom";
+import { Route, withRouter, Redirect, matchPath } from "react-router-dom";
 
 import { Icon, Menu } from "semantic-ui-react";
 import LocationsListView from "./locationsListView";
@@ -26,6 +26,9 @@ const styles = {
 
 class MainContainer extends Component {
   render() {
+
+    let matchPath2 = matchPath
+    debugger
     return (
       <div style={styles.container}>
 
@@ -34,14 +37,14 @@ class MainContainer extends Component {
 
         <Menu attached="bottom" tabular style={styles.menuBottom}>
           <Menu.Item
-            active={this.props.location.pathname === "/categories"}
+            active={matchPath(this.props.location.pathname, {path: "/categories"}) !== null}
             onClick={() => this.props.history.push("/categories")}>
             <Icon name="tags" />
             Categories
           </Menu.Item>
 
           <Menu.Item
-            active={this.props.location.pathname === "/locations"}
+            active={matchPath(this.props.location.pathname, {path: "/locations"}) !== null}
             onClick={() => this.props.history.push("/locations")}>
             <Icon name="marker" />
             Locations
