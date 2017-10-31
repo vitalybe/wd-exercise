@@ -42,6 +42,7 @@ export default class Map extends Component {
     return (
       <div style={{ height: "10em", width: "10em" }}>
         <GoogleMapReact
+          bootstrapURLKeys={{ key: "AIzaSyCrMf3KYulRhiTyhbJuCu3QPTdwhLUBskA" }}
           onGoogleApiLoaded={this.onGoogleApiLoaded}
           onClick={!this.props.isReadOnly ? this.onClick : null}
           center={{ lat: this.state.lat, lng: this.state.lng }}
