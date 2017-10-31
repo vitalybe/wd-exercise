@@ -3,6 +3,7 @@ import "semantic-ui-css/semantic.min.css";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
+import classNames from "classnames"
 import { Accordion } from "semantic-ui-react";
 import LocationView from "./locationView";
 import LocationEdit from "./locationEdit";
@@ -12,7 +13,6 @@ import { Redirect, Route, withRouter } from "react-router-dom";
 
 const styles = {
   items: {
-    flex: 1,
     width: "100%",
   },
   itemSelected: {
@@ -33,19 +33,18 @@ class LocationsListView extends Component {
     let selectedLocationName = this.props.selectedLocationName;
 
     return (
-      <div>
+      <div className="list">
         <Route exact path={this.props.match.url} render={() => <Redirect to={this.props.match.url + "/view"} />} />
 
-        <Accordion styled style={styles.items}>
+        <Accordion styled fluid>
           {this.props.locations.map(location => {
             return (
               <div key={location.name}>
                 <Accordion.Title
-                  style={{
-                    ...(selectedLocationName === location.name && pathname !== this.props.match.url + "/add"
-                      ? styles.itemSelected
-                      : null),
-                  }}
+                  className={classNames({
+                    "item-selected":
+                      selectedLocationName === location.name && pathname !== this.props.match.url + "/add",
+                  })}
                   onClick={() => this.handleItemClick(location.name)}>
                   {location.name}
                 </Accordion.Title>

@@ -84,60 +84,68 @@ export default class LocationEdit extends Component {
   render() {
     return (
       <Accordion.Content active={true}>
-        <table>
-          <tbody>
-            <tr>
-              <td style={styles.kind}>Name: </td>
-              <td style={styles.value}>
-                <Input value={this.state.name} onChange={(e, data) => this.modifyValue("name", data.value)} />
-              </td>
-            </tr>
-            <tr>
-              <td style={styles.kind}>Category: </td>
-              <td style={styles.value}>
-                <Dropdown
-                  fluid
-                  selection
-                  placeholder="Select Category"
-                  value={this.state.categoryName || ""}
-                  options={categories.map(category => ({ text: category.name, value: category.name }))}
-                  onChange={(e, data) => this.modifyValue("categoryName", data.value)}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td style={styles.kind}>Address: </td>
-              <td style={styles.value}>
-                <Input value={this.state.address} onChange={(e, data) => this.modifyValue("address", data.value)} />
-              </td>
-            </tr>
-            <tr>
-              <td style={styles.kind}>Latitude: </td>
-              <td style={styles.value}>
-                <Input value={this.state.lat} onChange={(e, data) => this.modifyValue("lat", parseFloat(data.value))} />
-              </td>
-            </tr>
-            <tr>
-              <td style={styles.kind}>Longitude: </td>
-              <td style={styles.value}>
-                <Input value={this.state.lng} onChange={(e, data) => this.modifyValue("lng", parseFloat(data.value))} />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        {this.props.location
-          ? <Button onClick={this.onUpdate} disabled={!this.state.modified}>
+        <div className="edit">
+          <table>
+            <tbody>
+              <tr>
+                <td style={styles.kind}>Name: </td>
+                <td style={styles.value}>
+                  <Input value={this.state.name} onChange={(e, data) => this.modifyValue("name", data.value)} />
+                </td>
+              </tr>
+              <tr>
+                <td style={styles.kind}>Category: </td>
+                <td style={styles.value}>
+                  <Dropdown
+                    fluid
+                    selection
+                    placeholder="Select Category"
+                    value={this.state.categoryName || ""}
+                    options={categories.map(category => ({ text: category.name, value: category.name }))}
+                    onChange={(e, data) => this.modifyValue("categoryName", data.value)}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td style={styles.kind}>Address: </td>
+                <td style={styles.value}>
+                  <Input value={this.state.address} onChange={(e, data) => this.modifyValue("address", data.value)} />
+                </td>
+              </tr>
+              <tr>
+                <td style={styles.kind}>Latitude: </td>
+                <td style={styles.value}>
+                  <Input
+                    value={this.state.lat}
+                    onChange={(e, data) => this.modifyValue("lat", parseFloat(data.value))}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td style={styles.kind}>Longitude: </td>
+                <td style={styles.value}>
+                  <Input
+                    value={this.state.lng}
+                    onChange={(e, data) => this.modifyValue("lng", parseFloat(data.value))}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <Map
+            isReadOnly={false}
+            initialLat={this.state.lat}
+            initialLng={this.state.lng}
+            onLocationChanged={this.onMapLocationChanged}
+          />
+          {this.props.location
+            ? <Button onClick={this.onUpdate} disabled={!this.state.modified}>
               Update
             </Button>
-          : <Button onClick={this.onCreate} disabled={!this.state.modified}>
+            : <Button onClick={this.onCreate} disabled={!this.state.modified}>
               Create
             </Button>}
-        <Map
-          isReadOnly={false}
-          initialLat={this.state.lat}
-          initialLng={this.state.lng}
-          onLocationChanged={this.onMapLocationChanged}
-        />
+        </div>
       </Accordion.Content>
     );
   }

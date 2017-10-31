@@ -39,7 +39,7 @@ export default class Map extends Component {
 
   render() {
     return (
-      <div style={{ height: "10em", width: "10em" }}>
+      <div className="map">
         <GoogleMapReact
           bootstrapURLKeys={{ key: "AIzaSyCrMf3KYulRhiTyhbJuCu3QPTdwhLUBskA" }}
           onGoogleApiLoaded={this.onGoogleApiLoaded}

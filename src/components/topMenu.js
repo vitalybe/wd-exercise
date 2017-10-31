@@ -2,21 +2,8 @@ import "semantic-ui-css/semantic.min.css";
 
 import React, { Component } from "react";
 import { Menu } from "semantic-ui-react";
-import {withRouter} from "react-router-dom";
-
-const styles = {
-  items: {
-    flex: 1,
-    width: "100%",
-  },
-  kind: {
-    fontWeight: "bold",
-  },
-
-  itemSelected: {
-    backgroundColor: "lightGrey",
-  },
-};
+import { withRouter } from "react-router-dom";
+import classNames from "classnames"
 
 class TopMenu extends Component {
   render() {
@@ -25,22 +12,22 @@ class TopMenu extends Component {
     return (
       <Menu attached="top">
         <Menu.Item
-          style={{ ...(this.props.location.pathname === matchUrl + "/view" ? styles.itemSelected : null) }}
+          className={classNames({ "item-selected": this.props.location.pathname === matchUrl + "/view" })}
           onClick={() => this.props.history.push(matchUrl + "/view")}>
           View
         </Menu.Item>
         <Menu.Item
-          style={{ ...(this.props.location.pathname === matchUrl + "/edit" ? styles.itemSelected : null) }}
+          className={classNames({ "item-selected": this.props.location.pathname === matchUrl + "/edit" })}
           onClick={() => this.props.history.push(matchUrl + "/edit")}>
           Edit
         </Menu.Item>
         <Menu.Item
-          style={{ ...(this.props.location.pathname === matchUrl + "/add" ? styles.itemSelected : null) }}
+          className={classNames({ "item-selected": this.props.location.pathname === matchUrl + "/add" })}
           onClick={() => this.props.history.push(matchUrl + "/add")}>
           Add
         </Menu.Item>
         <Menu.Item
-          style={{ ...(this.props.location.pathname === matchUrl + "/delete" ? styles.itemSelected : null) }}
+          className={classNames({ "item-selected": this.props.location.pathname === matchUrl + "/delete" })}
           onClick={() => this.props.history.push(matchUrl + "/delete")}>
           Delete
         </Menu.Item>
@@ -49,4 +36,4 @@ class TopMenu extends Component {
   }
 }
 
-export default withRouter(TopMenu)
+export default withRouter(TopMenu);
