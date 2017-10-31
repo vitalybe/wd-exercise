@@ -1,7 +1,6 @@
 import "semantic-ui-css/semantic.min.css";
 
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 
 import { Accordion } from "semantic-ui-react";
 import { categories } from "../../model/categories";

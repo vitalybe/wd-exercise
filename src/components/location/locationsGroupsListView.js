@@ -1,7 +1,7 @@
 import "semantic-ui-css/semantic.min.css";
 
 import React, { Component } from "react";
-import {Checkbox, Divider, Dropdown, Header, Label, Segment} from "semantic-ui-react";
+import {Checkbox, Divider, Dropdown, Header, Segment} from "semantic-ui-react";
 import { observer } from "mobx-react";
 
 import { Accordion } from "semantic-ui-react";

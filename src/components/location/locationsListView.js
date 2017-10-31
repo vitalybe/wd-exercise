@@ -11,16 +11,6 @@ import LocationDelete from "./locationDelete";
 import { observer } from "mobx-react";
 import { Redirect, Route, withRouter } from "react-router-dom";
 
-const styles = {
-  items: {
-    width: "100%",
-  },
-  itemSelected: {
-    backgroundColor: "lightGrey",
-    color: "black",
-  },
-};
-
 @observer
 class LocationsListView extends Component {
   handleItemClick = name => {
