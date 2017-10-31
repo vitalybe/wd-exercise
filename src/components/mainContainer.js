@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Route, withRouter, Redirect, matchPath } from "react-router-dom";
 
 import { Icon, Menu } from "semantic-ui-react";
-import LocationsGroupsListView from "./locationsGroupsListView";
+import LocationsGroupsListView from "./location/locationsGroupsListView";
 
 import { categories, Category } from "../model/categories";
 import { locations, Location } from "../model/locations";

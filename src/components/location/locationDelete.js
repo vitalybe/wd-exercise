@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import { Button } from "semantic-ui-react";
-import { locations } from "../model/locations";
+import { locations } from "../../model/locations";
 
 export default class LocationDelete extends Component {
   onDelete = () => {

@@ -5,10 +5,10 @@ import { Checkbox, Dropdown, Header, Label, Segment } from "semantic-ui-react";
 import { observer } from "mobx-react";
 
 import { Accordion } from "semantic-ui-react";
-import TopMenu from "./topMenu";
+import TopMenu from "../topMenu";
 import LocationsListView from "./locationsListView";
-import { categories } from "../model/categories";
-import { locations } from "../model/locations";
+import { categories } from "../../model/categories";
+import { locations } from "../../model/locations";
 import LocationEdit from "./locationEdit";
 
 const styles = {

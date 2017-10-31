@@ -4,8 +4,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import { Accordion } from "semantic-ui-react";
-import { Location } from "../model/locations";
-import Map from "./map/map";
+import { Location } from "../../model/locations";
+import Map from "../map/map";
 
 const styles = {
   kind: {
