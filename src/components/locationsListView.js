@@ -23,7 +23,10 @@ const styles = {
 
 @observer
 class LocationsListView extends Component {
-  handleItemClick = name => this.props.onSelectedLocationChange(name);
+  handleItemClick = name => {
+    navigator.vibrate(200);
+    this.props.onSelectedLocationChange(name);
+  };
 
   render() {
     let pathname = this.props.location.pathname;
