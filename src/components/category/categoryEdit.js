@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 
 import { Accordion, Input, Button } from "semantic-ui-react";
 import { Category, categories } from "../../model/categories";
+import {toast} from "react-toastify";
 
 const styles = {
   kind: {
@@ -50,6 +51,7 @@ export default class CategoryEdit extends Component {
     let category = new Category();
     this.fillCategoryFromInput(category);
     categories.push(category);
+    toast(`Created category "${category.name}"`);
 
     this.setState({ modified: false });
   };

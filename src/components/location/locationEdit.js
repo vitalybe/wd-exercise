@@ -7,6 +7,7 @@ import { Accordion, Input, Dropdown, Button } from "semantic-ui-react";
 import { Location, locations } from "../../model/locations";
 import { categories } from "../../model/categories";
 import Map from "../map/map";
+import { toast } from "react-toastify";
 
 const styles = {
   kind: {
@@ -67,6 +68,7 @@ export default class LocationEdit extends Component {
     let location = new Location();
     this.fillLocationFromInput(location);
     locations.push(location);
+    toast(`Created location "${location.name}"`);
 
     this.setState({ modified: false });
   };
