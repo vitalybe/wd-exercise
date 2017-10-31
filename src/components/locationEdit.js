@@ -87,6 +87,12 @@ export default class LocationEdit extends Component {
         <table>
           <tbody>
             <tr>
+              <td style={styles.kind}>Name: </td>
+              <td style={styles.value}>
+                <Input value={this.state.name} onChange={(e, data) => this.modifyValue("name", data.value)} />
+              </td>
+            </tr>
+            <tr>
               <td style={styles.kind}>Category: </td>
               <td style={styles.value}>
                 <Dropdown
@@ -97,12 +103,6 @@ export default class LocationEdit extends Component {
                   options={categories.map(category => ({ text: category.name, value: category.name }))}
                   onChange={(e, data) => this.modifyValue("categoryName", data.value)}
                 />
-              </td>
-            </tr>
-            <tr>
-              <td style={styles.kind}>Name: </td>
-              <td style={styles.value}>
-                <Input value={this.state.name} onChange={(e, data) => this.modifyValue("name", data.value)} />
               </td>
             </tr>
             <tr>

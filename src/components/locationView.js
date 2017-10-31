@@ -21,15 +21,15 @@ export default class LocationView extends Component {
         <table>
           <tbody>
             <tr>
-              <td style={styles.kind}>Category: </td>
-              <td style={styles.value}>
-                {this.props.location.category.name}
-              </td>
-            </tr>
-            <tr>
               <td style={styles.kind}>Name: </td>
               <td style={styles.value}>
                 {this.props.location.name}
+              </td>
+            </tr>
+            <tr>
+              <td style={styles.kind}>Category: </td>
+              <td style={styles.value}>
+                {this.props.location.category.name}
               </td>
             </tr>
             <tr>
