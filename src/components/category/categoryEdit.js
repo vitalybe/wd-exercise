@@ -54,26 +54,36 @@ export default class CategoryEdit extends Component {
     this.setState({ modified: false });
   };
 
+  isNameInputValid() {
+    return this.state.name && !categories.find(category => category.name === this.state.name);
+  }
+
   render() {
     return (
       <Accordion.Content active={true}>
-        <table>
-          <tbody>
-            <tr>
-              <td style={styles.kind}>Name: </td>
-              <td style={styles.value}>
-                <Input value={this.state.name} onChange={(e, data) => this.modifyValue("name", data.value)} />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        {this.props.category
-          ? <Button onClick={this.onUpdate} disabled={!this.state.modified}>
-              Update
-            </Button>
-          : <Button onClick={this.onCreate} disabled={!this.state.modified}>
-              Create
-            </Button>}
+        <div className="edit">
+          <table>
+            <tbody>
+              <tr>
+                <td style={styles.kind}>Name: </td>
+                <td style={styles.value}>
+                  <Input
+                    value={this.state.name}
+                    onChange={(e, data) => this.modifyValue("name", data.value)}
+                    error={!this.isNameInputValid()}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          {this.props.category
+            ? <Button onClick={this.onUpdate} disabled={!this.state.modified || !this.isNameInputValid()}>
+                Update
+              </Button>
+            : <Button onClick={this.onCreate} disabled={!this.state.modified || !this.isNameInputValid()}>
+                Create
+              </Button>}
+        </div>
       </Accordion.Content>
     );
   }

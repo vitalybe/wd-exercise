@@ -27,7 +27,7 @@ class CategoriesListView extends Component {
     let selectedCategoryName = this.state.selectedCategoryName;
 
     return (
-      <div>
+      <div className="categories">
         <Route exact path={this.props.match.url} render={() => <Redirect to={this.props.match.url + "/view"} />} />
 
         <TopMenu />
